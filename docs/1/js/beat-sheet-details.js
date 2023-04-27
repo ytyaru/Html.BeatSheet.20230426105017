@@ -4,14 +4,11 @@ class BeatSheetDetails {
     reset() {
         // ラベル設定
         for (let el of document.querySelectorAll(`input[type=checkbox], input[type=radio]`)) {
-            console.debug(Language.Selected)
             if (Language.Selected.form.label.hasOwnProperty(el.value)) {
-                console.debug(el.value)
                 el.parentElement.querySelector('span').textContent = Language.Selected.form.label[el.value]
             }
         }
         for (let el of document.querySelectorAll(`button`)) {
-            console.debug(el.id, Language.Selected.form.label.hasOwnProperty(el.id))
             if (Language.Selected.form.label.hasOwnProperty(el.id)) {
                 el.textContent = Language.Selected.form.label[el.id]
             }

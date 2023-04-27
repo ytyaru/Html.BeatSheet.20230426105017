@@ -11,10 +11,8 @@ class DropJson {
                 e.preventDefault();
                 const files = e.dataTransfer.files;
                 if (1 < files.length) { return alert('アップロードできるファイルは1つだけです。') }
-                //if (!files[0].type.match('application/json')) { return alert('アップロードできるファイルはJSON形式だけです。(application/json)') }
                 this.#load(files[0])
                 this.fileInput.files = files; //inputのvalueをドラッグしたファイルに置き換える。
-                //this.#previewFile(files[0]);
             }, false);
         }
     }
