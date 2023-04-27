@@ -18,6 +18,12 @@ class DropJson {
             }, false);
         }
     }
+    reset() {
+        // input type=file は ラベルを設定できない仕様……
+        // https://stackoverflow.com/questions/14340519/html-input-file-how-to-translate-choose-file-and-no-file-chosen
+        //this.fileInput.value = (Language.IsJa) ? 'ファイルを選択' : 'select file'
+        this.fileInput.nextElementSibling.textContent = (Language.IsJa) ? 'またはJSONファイルをこのページの任意箇所へドラッグ＆ドロップすると、データを表示する' : 'or, drag and drop the json file to any part of this page to display the data.'
+    }
     #load(file) {
         if (!file.type.match('application/json')) { return alert('アップロードできるファイルはJSON形式だけです。(application/json)') }
         this.#previewFile(file);

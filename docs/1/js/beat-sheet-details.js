@@ -1,20 +1,29 @@
 (function() {
 class BeatSheetDetails {
-    constructor() { this.trans = null; }
-    async setup() {
-        await this.#load()
-        // ラベル＆プレースホルダー設定
+    constructor() { }
+    reset() {
+        // ラベル設定
         for (let el of document.querySelectorAll(`input[type=checkbox], input[type=radio]`)) {
-            if (this.trans.form.label.hasOwnProperty(el.value)) {
-                console.log(el.value)
-                el.parentElement.append(this.trans.form.label[el.value])
+            console.debug(Language.Selected)
+            if (Language.Selected.form.label.hasOwnProperty(el.value)) {
+                console.debug(el.value)
+                el.parentElement.querySelector('span').textContent = Language.Selected.form.label[el.value]
             }
         }
-        for (let el of document.querySelectorAll(`input[type=text], textarea, select, button`)) {
-            if (this.trans.form.placeholder.hasOwnProperty(el.name)) {
-                el.setAttribute('placeholder', this.trans.form.placeholder[el.name])
+        for (let el of document.querySelectorAll(`button`)) {
+            console.debug(el.id, Language.Selected.form.label.hasOwnProperty(el.id))
+            if (Language.Selected.form.label.hasOwnProperty(el.id)) {
+                el.textContent = Language.Selected.form.label[el.id]
             }
         }
+        // プレースホルダー設定
+        for (let el of document.querySelectorAll(`input[type=text], textarea`)) {
+            if (Language.Selected.form.placeholder.hasOwnProperty(el.name)) {
+                el.setAttribute('placeholder', Language.Selected.form.placeholder[el.name])
+            }
+        }
+    }
+    setup() {
         // 連動ラジオボタン
         const interactions = {
             'false-victory': 'bad-guys-close-in-despire',
@@ -32,15 +41,6 @@ class BeatSheetDetails {
                 })
             }
         }
-    }
-    async #load() {
-        if (!this.trans) {
-            //const res = await fetch(`locales/ja/translation.json`)
-            const res = await fetch(`locales/ja-jp/translation.json`)
-            console.log(res)
-            this.trans = await res.json()
-        }
-        return this.trans
     }
 }
 window.BeatSheetDetails = new BeatSheetDetails()

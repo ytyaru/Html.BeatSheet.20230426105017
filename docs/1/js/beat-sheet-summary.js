@@ -8,6 +8,15 @@ class BeatSheetSummary {
         bss.appendChild(this.#makeTable())
         this.#setupEvent()
     }
+    reset(lang) {
+        if (!this.table) { return }
+        //console.debug(lang, this.beats)
+        for (let i=0; i<this.beats.length; i++) {
+            this.table.querySelector(`tr:nth-child(${i+1}) td:nth-child(4)`).textContent = ('ja-jp'===lang) ? this.beats[i].descriptionJa : this.beats[i].description
+            this.table.querySelector(`tr:nth-child(${i+1}) td:nth-child(5) input`).placeholder = ('ja-jp'===lang) ? this.beats[i].labelJa : this.beats[i].label
+        }
+        document.getElementById('is-show-beat-sheet-summary-description').nextElementSibling.textContent = (Language.IsJa) ? '説明' : 'description'
+    }
     #makeStyle() {
         const style = document.createElement('style')
         const css = `:root { --beat-sheet-summary-description-display:inherit; --beat-sheet-summary-input-width:50vw; }
@@ -28,22 +37,24 @@ class BeatSheetSummary {
     }
     #getInputWidth(isShowDescription) {
         const lastTd = document.querySelector('#beat-sheet-summary table tr td:last-child')
-        console.log(`${lastTd.getBoundingClientRect().left}px`)
+        //console.debug(`${lastTd.getBoundingClientRect().left}px`)
         const width = (isShowDescription) ? `50vw` : `calc(99vw - ${lastTd.getBoundingClientRect().left}px)`
-        console.log(`${width}`)
+        //console.debug(`${width}`)
         document.querySelector(':root').style.setProperty('--beat-sheet-summary-input-width', width)
     }
     async #load() {
         if (this.beats) { return this.beats }
         //this.beats = await Tsv.load(`locales/en/beats.tsv`)
         this.beats = await Tsv.load(`locales/en-us/beats.tsv`)
-        console.log(this.beats)
+        //console.debug(this.beats)
     }
     #makeTable() {
         const table = document.createElement('table')
+        table.id = 'beat-sheet-summary-table'
         for (let beat of this.beats) {
             table.appendChild(this.#makeTr(beat))
         }
+        this.table = table
         return table
     }
     #makeTr(beat) {
@@ -62,7 +73,7 @@ class BeatSheetSummary {
         return td
     }
     #makeInput(id, placeholder) {
-        console.log(id, placeholder)
+        //console.debug(id, placeholder)
         const td = document.createElement('td')
         const input = document.createElement('input')
         input.id = `summary-${id}`

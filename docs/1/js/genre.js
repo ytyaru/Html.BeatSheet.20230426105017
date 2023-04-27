@@ -1,6 +1,6 @@
 (function() {
 class Genre {
-    constructor() { this.genres = null; this.workExamples = new Map(); this.genreSelect = null; this.subGenreSelect = null; }
+    constructor() { this.genres=null; this.workExamples=new Map(); this.genreSelect=null; this.subGenreSelect=null; }
     async setup() {
         if (!this.genres) { await this.#load() }
         this.#addGenreSelectOptions()
@@ -8,12 +8,32 @@ class Genre {
         this.genreSelect.dispatchEvent(new Event('change'))
         this.subGenreSelect.dispatchEvent(new Event('change'))
     }
+    async reset() {
+        if (!this.genres) { return }
+        const genreId = document.getElementById('genre').value
+        //console.log(this.genres)
+        const genre = this.genres.filter(g=>g.sid===genreId)[0]
+        //console.log(genre)
+        //console.log(genre.triple)
+        document.getElementById('genre-summary').value = ('ja-jp'===Language.SelectedCode) ? genre.summaryJa : genre.summary
+        const idx = genre.sub.indexOf(this.subGenreSelect.value)
+        document.getElementById('sub-genre-ja').textContent = ('ja-jp'===Language.SelectedCode) ? genre.subJa[idx] : genre.triple.join(',')
+        const links = [...document.querySelectorAll(`#genre-work-examples li a`)]
+        const works = await this.#loadWorkExample(this.subGenreSelect.value)
+        for (let i=0; i<links.length; i++) {
+            const w = works[i]
+            //console.log(works)
+            //console.log(works[i])
+            //console.log(w)
+            links[i].textContent = ('ja-jp'===Language.SelectedCode) ? ((w.nameJa) ? w.nameJa : w.nameEn) : w.nameEn
+            links[i].href = ('ja-jp'===Language.SelectedCode) ? ((w.urlJa) ? w.urlJa : w.urlEn) : w.urlEn
+        }
+    }
     async #load() { await this.#loadGenres() }
     async #loadGenres() {
         if (this.genres) { return this.genres }
-        //this.genres = await Tsv.load(`locales/en/genre.tsv`)
         this.genres = await Tsv.load(`locales/en-us/genre.tsv`)
-        console.log(this.genres)
+        //console.log(this.genres)
         for (let i=0; i<this.genres.length; i++) {
             this.genres[i].triple = this.genres[i].triple.split(',')
             this.genres[i].sub = this.genres[i].sub.split(',')
@@ -54,7 +74,8 @@ class Genre {
         this.genreSelect.addEventListener('change', async(e) => {
             this.#resetSubGenreSelect(e.target.value)
             const genre = this.genres.filter(g=>g.sid===e.target.value)[0]
-            document.getElementById('genre-summary').value = genre.summaryJa
+            //document.getElementById('genre-summary').value = genre.summaryJa
+            document.getElementById('genre-summary').value = ('ja-jp'===Language.SelectedCode) ? genre.summaryJa : genre.summary
             document.getElementById('genre-emoji').textContent = genre.emoji
             document.getElementById('genre-icon').src = `asset/image/icon/genre/png/220x220/${genre.lid}.png`
             document.getElementById('genre-icon').title = genre.label
@@ -67,7 +88,8 @@ class Genre {
             const genreId = document.getElementById('genre').value
             const genre = this.genres.filter(g=>g.sid===genreId )[0]
             const idx = genre.sub.indexOf(e.target.value)
-            document.getElementById('sub-genre-ja').textContent = genre.subJa[idx]
+            //document.getElementById('sub-genre-ja').textContent = genre.subJa[idx]
+            document.getElementById('sub-genre-ja').textContent = ('ja-jp'===Language.SelectedCode) ? genre.subJa[idx] : genre.triple.join(',')
         })
     }
     #resetSubGenreSelect(genreId) {
@@ -85,6 +107,7 @@ class Genre {
         }
     }
     async #resetWorkExamples(subGenreId) {
+        //console.log('#resetWorkExamples', subGenreId)
         const works = await this.#loadWorkExample(subGenreId)
         const ul = document.createElement('ul')
         ul.style = 'list-style-type:none;padding:0;margin:0;'
@@ -92,10 +115,13 @@ class Genre {
             const li = document.createElement('li')
             const a = document.createElement('a')
             li.style = 'display:inline-block;padding-right:1em;'
-            a.textContent = (w.nameJa) ? w.nameJa : w.nameEn
-            a.href = (w.urlJa) ? w.urlJa : w.urlEn
+            //a.textContent = (w.nameJa) ? w.nameJa : w.nameEn
+            //a.href = (w.urlJa) ? w.urlJa : w.urlEn
+            a.textContent = ('ja-jp'===Language.SelectedCode) ? ((w.nameJa) ? w.nameJa : w.nameEn) : w.nameEn
+            a.href = ('ja-jp'===Language.SelectedCode) ? ((w.urlJa) ? w.urlJa : w.urlEn) : w.urlEn
             li.appendChild(a)
             ul.appendChild(li)
+            //console.log(li)
         }
         document.getElementById('genre-work-examples').innerHTML = ''
         document.getElementById('genre-work-examples').appendChild(ul)

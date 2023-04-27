@@ -52,9 +52,10 @@
             "hightower-surprise": "Hightower Surprise",
             "dig-deep-down": "Dig deep down",
             "execute-new-plan": "Execute new plan",
-            "final_image": "Final Image",
+            "final-image": "Final Image",
             "hero-is-changed": "hero is changed",
-            "hero-rejects-change": "hero rejects change"
+            "hero-rejects-change": "hero rejects change",
+            "download":"Download (JSON)"
         },
         "placeholder": {
             "title": "Work name",
@@ -108,7 +109,7 @@
             "hightower-surprise": "hampered by unexpected obstacles",
             "dig-deep-down": "dig deep to find answers",
             "execute-new-plan": "carry out a new plan",
-            "final_image": "Shows the protagonist or the world after it has changed",
+            "final-image": "Shows the protagonist or the world after it has changed",
             "hero-is-changed": "Hero is changed",
             "hero-rejects-change": "Hero rejects change"
         }
