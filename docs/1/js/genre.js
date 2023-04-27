@@ -67,10 +67,10 @@ class Genre {
         this.genreSelect.addEventListener('change', async(e) => {
             this.#resetSubGenreSelect(e.target.value)
             const genre = this.genres.filter(g=>g.sid===e.target.value)[0]
-            //document.getElementById('genre-summary').value = genre.summaryJa
             document.getElementById('genre-summary').value = ('ja-jp'===Language.SelectedCode) ? genre.summaryJa : genre.summary
             document.getElementById('genre-emoji').textContent = genre.emoji
-            document.getElementById('genre-icon').src = `asset/image/icon/genre/png/220x220/${genre.lid}.png`
+            //document.getElementById('genre-icon').src = `asset/image/icon/genre/png/220x220/${genre.lid}.png`
+            document.getElementById('genre-icon').src = `asset/image/icon/genre/cc0/${genre.sid}.svg`
             document.getElementById('genre-icon').title = genre.label
             //this.#resetTriple(genre.triple)
             await this.#resetWorkExamples(genre.sub[0])
