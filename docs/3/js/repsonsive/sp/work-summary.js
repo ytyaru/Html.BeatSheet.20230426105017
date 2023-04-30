@@ -18,6 +18,7 @@ theme	Theme	A life lesson that the protagonist learns
 hook	Hook	Fun & Games. Grab the reader's attention
 central-question	CQ	Problems that the protagonist must solve
 logline	Logline	Who does what and how
+genre	Genre	Work genre
 synopsis	Synopsis	Synopsis`),
             'ja-jp': Tsv.parse(`id	label	placeholder
 title	タイトル	作品名
@@ -25,6 +26,7 @@ theme	テーマ	伝えたいこと（主人公が学ぶこと）
 hook	フック	ツカミ（Fun & Games）
 central-question	セントラルクエスチョン	主人公が解決すべき課題
 logline	ログライン	誰が、何して、こう変わる
+genre	ジャンル	作品のジャンル
 synopsis	あらすじ	あらすじ`)
         }
     }
@@ -52,7 +54,8 @@ synopsis	あらすじ	あらすじ`)
     #makeUi(id, data) {
         console.log(this.container)
         if ('genre'===id) {
-
+            this.container.appendChild(this.#makeLabel(data))
+//            this.container.appendChild(this.#makeLabel(data))
         }
         else if ('synopsis'===id) {
             this.container.appendChild(this.#makeTextarea(data))
