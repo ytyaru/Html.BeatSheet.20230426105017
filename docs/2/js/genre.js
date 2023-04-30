@@ -92,7 +92,7 @@ class Genre {
             this.subGenreSelect.innerHTML = ''
             for (let sub of genre.sub) {
                 const option = document.createElement('option')
-                option.textContent = sub
+                option.textContent = sub.toTitle()
                 option.value = sub
                 this.subGenreSelect.appendChild(option)
             }
