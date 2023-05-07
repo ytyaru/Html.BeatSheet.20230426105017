@@ -116,7 +116,7 @@ sh	超人	特殊能力,宿敵,呪い	実生活,絵本,幻想,大衆,漫画	主�
         ta.placeholder = data.placeholder
         return ta
     }
-*/
+    */
 }
 window.WorkSummaryGenre = new WorkSummaryGenre()
 })()
