@@ -41,7 +41,8 @@ class Html {
     // create
     create(tagName, attrs, text) {
         const el = document.createElement(tagName)
-        if (attrs) { for (let key of Object.keys(attrs)) { el[key] = attrs[key] } }
+        //if (attrs) { for (let key of Object.keys(attrs)) { el[key] = attrs[key] } }
+        if (attrs) { for (let key of Object.keys(attrs)) { (el.hasOwnProperty(key)) ? el[key] = attrs[key] : el.setAttribute(key, attrs[key]) } }
         if (text) {  el.textContent = text }
         return el
     }

@@ -7,6 +7,10 @@ window.addEventListener('DOMContentLoaded', async(event) => {
     Downloader.setup()
     DropJson.setup()
     await Language.setup()
+
+
+    console.log('HtmlResizeObservable.set()')
+    HtmlResizeObservable.set()
 });
 window.addEventListener('beforeunload', (event) => {
     console.log('beforeunload!!');

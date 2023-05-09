@@ -35,10 +35,7 @@ synopsis	あらすじ	あらすじ`)
         this.container = document.getElementById('work-summary-container')
         console.log(this.data)
         this.container.appendChild(this.#makeStyle())
-        for (let id of this.ids) {
-            const data = this.data[Language.SelectedCode].filter(d=>d.id===id)[0]
-            this.#makeUi(id, data)
-        }
+        this.#makeLayout()
     }
     reset(locale) {
         for (let id of this.ids) {
@@ -51,68 +48,74 @@ synopsis	あらすじ	あらすじ`)
             ui.placeholder = data.placeholder
         }
     }
-    #makeUi(id, data) {
-        console.log(this.container)
+    #makeLayout() {
+        const layout = Html.create('div', {'id':'work-summary-layout'})
+        const left = Html.create('div')
+        const right = Html.create('div')
+        for (let id of this.ids) {
+            const data = this.data[Language.SelectedCode].filter(d=>d.id===id)[0]
+            this.#makeRow(id, data, left, right)
+        }
+        layout.appendChild(left)
+        layout.appendChild(right)
+        this.container.appendChild(layout)
+    }
+    #makeRow(id, data, left, right) {
+        const row = Html.create('div')
         if ('genre'===id) {
-            this.container.appendChild(this.#makeLabel(data))
-//            this.container.appendChild(this.#makeLabel(data))
+            row.appendChild(this.#makeLabel(data))
+            left.appendChild(row)
         }
         else if ('synopsis'===id) {
-            //this.container.appendChild(this.#makeTextarea(data))
-            this.container.appendChild(this.#makeFlexTextarea(data))
+            row.appendChild(this.#makeFlexTextarea(data))
+            right.appendChild(row)
         }
         else {
-            this.container.appendChild(this.#makeLabel(data))
-            //this.container.appendChild(this.#makeInputText(data))
-            this.container.appendChild(this.#makeFlexTextarea(data))
+            row.appendChild(this.#makeLabel(data))
+            row.appendChild(this.#makeInputText(data))
+//            row.appendChild(this.#makeFlexTextarea(data))
+            left.appendChild(row)
         }
     }
+    /*
+    #makeUi(id, data) {
+        const row = Html.create('div')
+        if ('genre'===id) {
+            row.appendChild(this.#makeLabel(data))
+        }
+        else if ('synopsis'===id) {
+            row.appendChild(this.#makeTextarea(data))
+            //row.appendChild(this.#makeFlexTextarea(data))
+        }
+        else {
+            row.appendChild(this.#makeLabel(data))
+            row.appendChild(this.#makeInputText(data))
+//            row.appendChild(this.#makeFlexTextarea(data))
+        }
+        return row
+        //this.container.appendChild(layout)
+    }
+    */
     #makeStyle() { return Html.create('style', null, this.#css()) }
-    #makeLabel(data) {return Html.create('label', {'for':data.id}, data.label) }
-    #makeInputText(data) {return Html.create('input', {'id':data.id,'name':data.id.Camel,'title':data.label,'placeholder':data.placeholder,'type':'text'}, this.#css()) }
+    #makeLabel(data) { return Html.create('label', {'for':data.id}, data.label) }
+    #makeInputText(data) {return Html.create('input', {'id':data.id,'name':data.id.Camel,'title':data.label,'placeholder':data.placeholder,'type':'text'}) }
+//    #makeInputText(data) {return Html.create('input', {'id':data.id,'name':data.id.Camel,'title':data.label,'placeholder':data.placeholder,'type':'text','style':'display:table-cell;'}) }
     #makeTextarea(data) {return Html.create('textarea', {'id':data.id,'name':data.id.Camel,'title':data.label,'placeholder':data.placeholder}) }
+    //#makeTextarea(data) {return Html.create('textarea', {'id':data.id,'name':data.id.Camel,'title':data.label,'placeholder':data.placeholder,'style':'display:table-cell;'}) }
     #makeFlexTextarea(data) {return createFlexTextarea(this.#makeTextarea(data))}
     #css() {
-        return `#work-summary-container :is(input, textarea) { width:100%; }
+        return `#work-summary-container :is(input, textarea) { width:100%; display:table-cell; }
+#work-summary-container :is(label, input, textarea) { display:table-cell; }
+:root { --work-summary-layout-columns:2; }
+#work-summary-layout {
+    display:grid;
+    grid-template-columns:repeat(var(--work-summary-layout-columns), 1fr);
+}
+#work-summary-layout > div {
+    display:table-row;
+}
 `
     }
-/*
-    #makeStyle() {
-        const style = document.createElement('style')
-        style.textContent = this.#css()
-        return style
-    }
-    #css() {
-        return `#work-summary-container :is(input, textarea) { width:100%; }
-`
-    }
-    #makeLabel(data) {
-        const label = document.createElement('label')
-        label.for = data.id
-        label.textContent = data.label
-        return label
-    }
-    #makeInputText(data) {
-        const input = document.createElement('input')
-        input.type = 'text'
-        input.id = data.id
-        input.name = data.id
-        input.title = data.label
-        input.placeholder = data.placeholder
-//        input.style = 'width:100%;'
-        return input
-    }
-    #makeTextarea(data) {
-        const ta = document.createElement('textarea')
-        ta.id = data.id
-        ta.name = data.id
-        ta.title = data.label
-        ta.placeholder = data.placeholder
-        return ta
-    }
-    
-*/
 }
 window.WorkSummary = new WorkSummary()
 })()
-console.log('WorkSummary----------')

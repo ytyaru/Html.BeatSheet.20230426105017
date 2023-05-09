@@ -1,7 +1,7 @@
 (function(){
-class _HtmlResizeObservable extends ResizeObservable {
+class HtmlResizeObservable extends ResizeObservable {
     constructor(el) { super(Html.Root) }
-    set() { super.set(this.resize) }
+    set() { super.set(this.resize); this.#init(); }
     resize(entry, rect, size, writingMode) {
         if (size.inline <= 1024) { // 本当は768にしたいがシミュレータバグのため便宜上1024にしておく
             console.log('sp', writingMode, size, rect, entry, Css.get('inlineSize', Html.Root), document.body.clientWidth)
@@ -10,7 +10,9 @@ class _HtmlResizeObservable extends ResizeObservable {
             console.log('pc', writingMode, size, rect, entry, Css.get('inlineSize', Html.Root), document.body.clientWidth)
         }
     }
+    #init() {
+        WorkSummary.setup(super.WritingMode, super.InlineSize, super.BlockSize)
+    }
 }
-const HtmlResizeObservable = new _HtmlResizeObservable()
-HtmlResizeObservable.set()
+window.HtmlResizeObservable = new HtmlResizeObservable()
 })()
