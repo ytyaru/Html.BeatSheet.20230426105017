@@ -77,9 +77,10 @@ synopsis	あらすじ	あらすじ`)
             //table.appendChild(left)
         }
         else if ('synopsis'===id) {
-            row.appendChild(this.#makeTextarea(data))
             //row.appendChild(this.#makeFlexTextarea(data))
-            right.appendChild(row)
+//            row.appendChild(this.#makeTextarea(data))
+//            right.appendChild(row)
+            right.appendChild(this.#makeTextarea(data))
         }
         else {
             row.appendChild(this.#makeLabel(data))
@@ -108,7 +109,7 @@ synopsis	あらすじ	あらすじ`)
     #makeFlexTextarea(data) {return createFlexTextarea(this.#makeTextarea(data))}
 //#work-summary-container :is(label, input, textarea) { display:table-cell; }
     #css(inlineSize) {
-        return `#work-summary-container :is(label) { display:table-cell; width:0; white-space:nowrap; padding:0; margin:0; }
+        return `#work-summary-container :is(label) { display:table-cell; width:0; height:100%; white-space:nowrap; padding:0; margin:0; }
 #work-summary-container :is(input, textarea) { display:table-cell; width:100%; height:100%; padding:0; margin:0; }
 :root { --work-summary-layout-columns:${(inlineSize<=768) ? 1 : 2}; ----work-summary-label-width:100px; }
 #work-summary-layout {
