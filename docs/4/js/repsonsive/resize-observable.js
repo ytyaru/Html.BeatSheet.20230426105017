@@ -21,8 +21,6 @@ class ResizeObservable {
     get IsHorizontal() { return this.WritingMode.startsWith('horizontal') }
     get IsVertical() { return this.WritingMode.startsWith('vertical') }
     get IsSideways() { return this.WritingMode.startsWith('sideways') }
-    get InlineSize() { return Css.get('inlineSize', Html.Root) }
-    get BlockSize() { return Css.get('blockSize', Html.Root) }
-    get InlineSize() { return Css.get('inlineSize', this.el) }
-    get BlockSize() { return Css.get('blockSize', this.el) }
+    get InlineSize() { return Css.get('inline-size', this.el) }
+    get BlockSize() { return Css.get('block-size', this.el) }
 }
