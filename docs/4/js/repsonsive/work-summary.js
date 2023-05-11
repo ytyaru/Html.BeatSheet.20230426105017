@@ -32,12 +32,12 @@ synopsis	あらすじ	あらすじ`)
     }
     get Locale() { return ('ja'===window.navigator.language) ? 'ja-jp' : 'en-us' }
     setup(writingMode, inlineSize, blockSize) {
-        console.log('work-summary.setup(): aaaaaaa', writingMode, inlineSize, blockSize)
+        console.log('work-summary.setup(): ', writingMode, inlineSize, blockSize)
         this.container = document.getElementById('work-summary-container')
         console.log(this.data)
         this.container.appendChild(this.#makeStyle(inlineSize))
         this.#makeLayout()
-        console.log(Css.get('--work-summary-layout-columns'), inlineSize)
+        console.log(Css.getFloat('--work-summary-layout-columns'), inlineSize)
     }
     reset(locale) {
         for (let id of this.ids) {
@@ -110,15 +110,15 @@ synopsis	あらすじ	あらすじ`)
 //#work-summary-container :is(label, input, textarea) { display:table-cell; }
     #css(inlineSize) {
         return `#work-summary-container :is(label) { display:table-cell; width:0; height:100%; white-space:nowrap; padding:0; margin:0; }
-#work-summary-container :is(input, textarea) { display:table-cell; width:100%; height:100%; padding:0; margin:0; }
-:root { --work-summary-layout-columns:${(inlineSize<=768) ? 1 : 2}; ----work-summary-label-width:100px; }
+#work-summary-container :is(input, textarea) { display:table-cell; width:100%; height:100%; padding:0.25em; }
+:root { --work-summary-layout-columns:${(inlineSize<=768) ? 1 : 2}; --work-summary-label-width:100px; }
 #work-summary-layout {
     display:grid;
     grid-template-columns:repeat(var(--work-summary-layout-columns), 1fr);
-    padding:0; margin:0; 
 }
-#work-summary-table { display:table; width:100%; height:100%; padding:0; margin:0; }
-#work-summary-table > div { display:table-row; width:100%; height:100%; padding:0; margin:0; }
+#work-summary-table { display:table; width:100%; height:100%; }
+#work-summary-table > div { display:table-row; width:100%; height:100%; }
+#work-summary-table div { width:100%; height:100%; }
 `
     }
 }

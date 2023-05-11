@@ -23,4 +23,8 @@ class ResizeObservable {
     get IsSideways() { return this.WritingMode.startsWith('sideways') }
     get InlineSize() { return Css.get('inline-size', this.el) }
     get BlockSize() { return Css.get('block-size', this.el) }
+    get InlineInt() { return Css.getInt('inline-size', this.el) }
+    get BlockInt() { return Css.getInt('block-size', this.el) }
+    get InlineFloat() { return Css.getFloat('inline-size', this.el) }
+    get BlockFloat() { return Css.getFloat('block-size', this.el) }
 }

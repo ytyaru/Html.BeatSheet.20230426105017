@@ -11,8 +11,10 @@ class HtmlResizeObservable extends ResizeObservable {
         }
     }
     #init() {
-        console.log(super.WritingMode, super.InlineSize, super.BlockSize)
-        WorkSummary.setup(super.WritingMode, super.InlineSize, super.BlockSize)
+        //console.log(super.WritingMode, super.InlineSize, super.BlockSize)
+        //WorkSummary.setup(super.WritingMode, super.InlineSize, super.BlockSize)
+        console.log(super.WritingMode, super.InlineFloat, super.BlockFloat)
+        WorkSummary.setup(super.WritingMode, super.InlineFloat, super.BlockFloat)
     }
 }
 window.HtmlResizeObservable = new HtmlResizeObservable()
