@@ -89,6 +89,9 @@ synopsis	あらすじ	あらすじ`)
             //left.appendChild(row)
             table.appendChild(row)
             //table.appendChild(left)
+            if ('logline'===id) {
+
+            }
         }
     }
     #setLabelWidth(layout) {
