@@ -42,6 +42,7 @@ class Language {
                 const res = await fetch(`locales/${e.target.value}/translation.json`)
                 this.langs[e.target.value].trans = await res.json()
             }
+            WorkSummary.reset(e.target.value)
             LoglineTable.reset(e.target.value)
             BeatSheetSummary.reset(e.target.value)
             BeatSheetDetails.reset(e.target.value)

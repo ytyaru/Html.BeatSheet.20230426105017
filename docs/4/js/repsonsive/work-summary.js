@@ -72,26 +72,23 @@ synopsis	あらすじ	あらすじ`)
         const row = Html.create('div')
         if ('genre'===id) {
             row.appendChild(this.#makeLabel(data))
-            //left.appendChild(row)
             table.appendChild(row)
-            //table.appendChild(left)
         }
         else if ('synopsis'===id) {
-            //row.appendChild(this.#makeFlexTextarea(data))
-//            row.appendChild(this.#makeTextarea(data))
-//            right.appendChild(row)
             right.appendChild(this.#makeTextarea(data))
+            //right.appendChild(this.#makeFlexTextarea(data))
         }
         else {
             row.appendChild(this.#makeLabel(data))
             row.appendChild(this.#makeInputText(data))
-//            row.appendChild(this.#makeFlexTextarea(data))
-            //left.appendChild(row)
             table.appendChild(row)
-            //table.appendChild(left)
+            /*
             if ('logline'===id) {
-
+                row.appendChild(this.#makeFlexTextarea(data))
+            } else {
+                row.appendChild(this.#makeInputText(data))
             }
+            */
         }
     }
     #setLabelWidth(layout) {
@@ -106,11 +103,22 @@ synopsis	あらすじ	あらすじ`)
     #makeStyle(inlineSize) { return Html.create('style', null, this.#css(inlineSize)) }
     #makeLabel(data) { return Html.create('label', {'for':data.id}, data.label) }
     #makeInputText(data) {return Html.create('input', {'id':data.id,'name':data.id.Camel,'title':data.label,'placeholder':data.placeholder,'type':'text'}) }
-//    #makeInputText(data) {return Html.create('input', {'id':data.id,'name':data.id.Camel,'title':data.label,'placeholder':data.placeholder,'type':'text','style':'display:table-cell;'}) }
     #makeTextarea(data) {return Html.create('textarea', {'id':data.id,'name':data.id.Camel,'title':data.label,'placeholder':data.placeholder}) }
-    //#makeTextarea(data) {return Html.create('textarea', {'id':data.id,'name':data.id.Camel,'title':data.label,'placeholder':data.placeholder,'style':'display:table-cell;'}) }
     #makeFlexTextarea(data) {return createFlexTextarea(this.#makeTextarea(data))}
-//#work-summary-container :is(label, input, textarea) { display:table-cell; }
+    #css(inlineSize) {
+        return `#work-summary-container :is(label) { display:${(inlineSize<=768) ? 'block' : 'table-cell'}; width:0; height:100%; white-space:nowrap; padding:0; margin:0; }
+#work-summary-container :is(input, textarea) { display:${(inlineSize<=768) ? 'block' : 'table-cell'}; width:100%; height:100%; padding:0.25em; }
+:root { --work-summary-layout-columns:${(inlineSize<=1280) ? 1 : 2}; --work-summary-label-width:100px; }
+#work-summary-layout {
+    display:grid;
+    grid-template-columns:repeat(var(--work-summary-layout-columns), 1fr);
+}
+#work-summary-table { display:table; width:100%; height:100%; }
+#work-summary-table > div { display:table-row; width:100%; height:100%; }
+#work-summary-table div { width:100%; height:100%; }
+`
+    }
+    /*
     #css(inlineSize) {
         return `#work-summary-container :is(label) { display:table-cell; width:0; height:100%; white-space:nowrap; padding:0; margin:0; }
 #work-summary-container :is(input, textarea) { display:table-cell; width:100%; height:100%; padding:0.25em; }
@@ -124,6 +132,9 @@ synopsis	あらすじ	あらすじ`)
 #work-summary-table div { width:100%; height:100%; }
 `
     }
+    */
+
 }
+
 window.WorkSummary = new WorkSummary()
 })()
