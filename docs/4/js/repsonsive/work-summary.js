@@ -34,15 +34,18 @@ synopsis	あらすじ	あらすじ`)
     setup(writingMode, inlineSize, blockSize) {
         console.log('work-summary.setup(): ', writingMode, inlineSize, blockSize)
         this.container = document.getElementById('work-summary-container')
+        console.log(this.container)
         console.log(this.data)
         this.container.appendChild(this.#makeStyle(inlineSize))
         this.#makeLayout()
         console.log(Css.getFloat('--work-summary-layout-columns'), inlineSize)
     }
     reset(locale) {
+        if (!this.container) { return }
         for (let id of this.ids) {
             const data = this.data[Language.SelectedCode].filter(d=>d.id===id)[0]
             console.log(id, data)
+            console.log(this.container)
             const label = this.container.querySelector(`label[for="${data.id}"]`)
             label.textContent = data.label
             const ui = this.container.querySelector(`input[id="${data.id}"], textarea[id="${data.id}"]`)
@@ -80,14 +83,18 @@ synopsis	あらすじ	あらすじ`)
         }
         else {
             row.appendChild(this.#makeLabel(data))
-            row.appendChild(this.#makeInputText(data))
-            table.appendChild(row)
-            /*
+//            row.appendChild(this.#makeInputText(data))
             if ('logline'===id) {
-                row.appendChild(this.#makeFlexTextarea(data))
+                //row.appendChild(this.#makeFlexTextarea(data))
+                data.class = (data.class) ? data.class + ' flex' : 'flex'
+                //data['class'] = data['class'] + ' flex'
+                console.log(data)
+                row.appendChild(this.#makeTextarea(data))
             } else {
                 row.appendChild(this.#makeInputText(data))
             }
+            table.appendChild(row)
+            /*
             */
         }
     }
@@ -115,7 +122,6 @@ synopsis	あらすじ	あらすじ`)
 }
 #work-summary-table { display:table; width:100%; height:100%; }
 #work-summary-table > div { display:table-row; width:100%; height:100%; }
-#work-summary-table div { width:100%; height:100%; }
 `
     }
     /*

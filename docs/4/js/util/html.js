@@ -42,7 +42,23 @@ class Html {
     create(tagName, attrs, text) {
         const el = document.createElement(tagName)
         //if (attrs) { for (let key of Object.keys(attrs)) { el[key] = attrs[key] } }
-        if (attrs) { for (let key of Object.keys(attrs)) { (el.hasOwnProperty(key)) ? el[key] = attrs[key] : el.setAttribute(key, attrs[key]) } }
+        //if (attrs) { for (let key of Object.keys(attrs)) { (el.hasOwnProperty(key)) ? el[key] = attrs[key] : el.setAttribute(key, attrs[key]) } }
+        if (attrs) {
+//            for (let key of Object.keys(attrs)) {
+//                (el.hasOwnProperty(key)) ? el[key] = attrs[key] : el.setAttribute(key, attrs[key])
+//            }
+            for (let key of Object.keys(attrs)) {
+                if ('class'===key) {
+                    if (Type.isString(attrs[key])) {
+                        for (let v of attrs[key].split(' ').filter(v=>!!v)) { el.classList.add(v) }
+                    } else if (Type.isStrings(attrs[key])) {
+                        for (let v of attrs[key]) { el.classList.add(v) }
+                    } else {}
+                } else {
+                    (el.hasOwnProperty(key)) ? el[key] = attrs[key] : el.setAttribute(key, attrs[key])
+                }
+            }
+        }
         if (text) {  el.textContent = text }
         return el
     }

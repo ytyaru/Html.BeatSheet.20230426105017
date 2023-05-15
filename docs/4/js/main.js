@@ -3,12 +3,13 @@ window.addEventListener('DOMContentLoaded', async(event) => {
     await Language.load(Language.Default)
     BeatSheetDetails.setup()
     Promise.all([Genre.setup(), BeatSheetSummary.setup(), LoglineTable.setup()])
-    document.querySelectorAll('textarea.flex').forEach(setupFlexTextarea)
+    //document.querySelectorAll('textarea.flex').forEach(setupFlexTextarea)
     Downloader.setup()
     DropJson.setup()
     await Language.setup()
 
     HtmlResizeObservable.set()
+    document.querySelectorAll('textarea.flex').forEach(setupFlexTextarea)
 });
 window.addEventListener('beforeunload', (event) => {
     console.log('beforeunload!!');
