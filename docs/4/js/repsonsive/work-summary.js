@@ -85,11 +85,11 @@ synopsis	あらすじ	あらすじ`)
             row.appendChild(this.#makeLabel(data))
 //            row.appendChild(this.#makeInputText(data))
             if ('logline'===id) {
-                //row.appendChild(this.#makeFlexTextarea(data))
-                data.class = (data.class) ? data.class + ' flex' : 'flex'
+                //data.class = (data.class) ? data.class + ' flex' : 'flex'
                 //data['class'] = data['class'] + ' flex'
                 console.log(data)
-                row.appendChild(this.#makeTextarea(data))
+                //row.appendChild(this.#makeTextarea(data))
+                row.appendChild(this.#makeFlexTextarea(data))
             } else {
                 row.appendChild(this.#makeInputText(data))
             }
@@ -111,7 +111,8 @@ synopsis	あらすじ	あらすじ`)
     #makeLabel(data) { return Html.create('label', {'for':data.id}, data.label) }
     #makeInputText(data) {return Html.create('input', {'id':data.id,'name':data.id.Camel,'title':data.label,'placeholder':data.placeholder,'type':'text'}) }
     #makeTextarea(data) {return Html.create('textarea', {'id':data.id,'name':data.id.Camel,'title':data.label,'placeholder':data.placeholder}) }
-    #makeFlexTextarea(data) {return createFlexTextarea(this.#makeTextarea(data))}
+    #makeFlexTextarea(data) {return Html.create('textarea', {'id':data.id,'name':data.id.Camel,'title':data.label,'placeholder':data.placeholder,'class':'flex', 'style':'max-width:100%; line-height:1.5em; height:calc(1.5em * 1);'})}
+    //#makeFlexTextarea(data) {return createFlexTextarea(this.#makeTextarea(data))}
     #css(inlineSize) {
         return `#work-summary-container :is(label) { display:${(inlineSize<=768) ? 'block' : 'table-cell'}; width:0; height:100%; white-space:nowrap; padding:0; margin:0; }
 #work-summary-container :is(input, textarea) { display:${(inlineSize<=768) ? 'block' : 'table-cell'}; width:100%; height:100%; padding:0.25em; }
